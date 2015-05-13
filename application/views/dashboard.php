@@ -14,36 +14,24 @@
   <section id="two">
     <h2>Recent Work</h2>
     <div class="row">
-      <article class="6u 12u$(xsmall) work-item">
-        <a href="../../resource/images/fulls/01.jpg" class="image fit thumb"><img src="../../resource/images/thumbs/01.jpg" alt="" /></a>
-        <h3>Magna sed consequat tempus</h3>
-        <p>Lorem ipsum dolor sit amet nisl sed nullam feugiat.</p>
-      </article>
-      <article class="6u$ 12u$(xsmall) work-item">
-        <a href="../../resource/images/fulls/02.jpg" class="image fit thumb"><img src="../../resource/images/thumbs/02.jpg" alt="" /></a>
-        <h3>Ultricies lacinia interdum</h3>
-        <p>Lorem ipsum dolor sit amet nisl sed nullam feugiat.</p>
-      </article>
-      <article class="6u 12u$(xsmall) work-item">
-        <a href="../../resource/images/fulls/03.jpg" class="image fit thumb"><img src="../../resource/images/thumbs/03.jpg" alt="" /></a>
-        <h3>Tortor metus commodo</h3>
-        <p>Lorem ipsum dolor sit amet nisl sed nullam feugiat.</p>
-      </article>
-      <article class="6u$ 12u$(xsmall) work-item">
-        <a href="../../resource/images/fulls/04.jpg" class="image fit thumb"><img src="../../resource/images/thumbs/04.jpg" alt="" /></a>
-        <h3>Quam neque phasellus</h3>
-        <p>Lorem ipsum dolor sit amet nisl sed nullam feugiat.</p>
-      </article>
-      <article class="6u 12u$(xsmall) work-item">
-        <a href="../../resource/images/fulls/05.jpg" class="image fit thumb"><img src="../../resource/images/thumbs/05.jpg" alt="" /></a>
-        <h3>Nunc enim commodo aliquet</h3>
-        <p>Lorem ipsum dolor sit amet nisl sed nullam feugiat.</p>
-      </article>
-      <article class="6u$ 12u$(xsmall) work-item">
-        <a href="../../resource/images/fulls/06.jpg" class="image fit thumb"><img src="../../resource/images/thumbs/06.jpg" alt="" /></a>
-        <h3>Risus ornare lacinia</h3>
-        <p>Lorem ipsum dolor sit amet nisl sed nullam feugiat.</p>
-      </article>
+      <?php
+      foreach($itemList as $item)
+      {
+        $itemType = $item['item_type'];
+
+        if($item['item_type_id'] == '1' || $item['item_type_id'] == '2')
+          $itemType = 'Knife';
+
+        $filePath = '../../resource/uploadedImages/sales/'.$itemType.'/'.$item['item_image_filepath'];
+
+        echo ('<article class="6u 12u$(xsmall) work-item">');
+        echo ('<a href="/shopping/'.strtolower($itemType).'" class="image fit thumb"><img src="'.$filePath.'" alt="'.$itemType.'" /></a>');
+        echo ('<h3>'.$item['item_name'].'</h3>');
+        echo ('<span><h3>Price: $'.$item['item_price'].'</h3><button>Add to Cart</button></span>');
+        echo ('<p>'.$item['item_description'].'</p>');
+        echo ('</article>');
+      }
+      ?>
     </div>
     <ul class="actions">
       <li><a href="#" class="button">Full Portfolio</a></li>
