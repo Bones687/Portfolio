@@ -1,15 +1,18 @@
 <?php if ( ! defined('BASEPATH')) exit('No direct script access allowed');
 
 class Admin extends CI_Controller {
+
   private $data = array();
+
   public function __construct(){
     parent::__construct();
+
     $this->data = array('title' => 'Administration',
                         'name' => $this->session->userdata('name'),
                         'userType' => $this->session->userdata('user_type'),
                         'message' => '');
 
-    $this->load->model('model_item');
+    $this->load->model('Model_item');
   }
 
   public function index(){
@@ -19,10 +22,10 @@ class Admin extends CI_Controller {
   public function dashboard($message = ''){
     if($this->session->userdata('user_type') == 'AD') {
       $this->data['message'] = $message;
-      $this->load->view('view_header', $this->data);
-      $this->load->view('view_nav', $this->data);
+      $this->load->view('template/view_header', $this->data);
+      $this->load->view('template/view_nav', $this->data);
       $this->load->view('admin/view_dashboard', $this->data);
-      $this->load->view('view_footer');
+      $this->load->view('template/view_footer');
     }
     else
       show_404();
@@ -32,10 +35,10 @@ class Admin extends CI_Controller {
     if($this->session->userdata('user_type') == 'AD') {
       $this->load->model('Model_item');
       $this->data['itemList'] = $this->Model_item->getItemType();
-      $this->load->view('view_header', $this->data);
-      $this->load->view('view_nav', $this->data);
+      $this->load->view('template/view_header', $this->data);
+      $this->load->view('template/view_nav', $this->data);
       $this->load->view('admin/view_item_creation', $this->data);
-      $this->load->view('view_footer');
+      $this->load->view('template/view_footer');
     }
     else
       show_404();
@@ -76,7 +79,7 @@ class Admin extends CI_Controller {
           break;
       }
       $date = date('Y-m-d');
-      $fileName = $itemType.'-'.$this->model_item->getItemNumber().':'.$date;
+      $fileName = $itemType.'-'.$this->Model_item->getItemNumber().':'.$date;
       $date = date('Y-m-d G:i');
 
       $config['upload_path'] = './resource/uploadedImages/sales/'.$itemType.'/';
@@ -94,7 +97,7 @@ class Admin extends CI_Controller {
       }
       else
       {
-        $this->model_item->addItem($fileName, $date);
+        $this->Model_item->addItem($fileName, $date);
         $this->dashboard("Item successfully added");
       }
     }

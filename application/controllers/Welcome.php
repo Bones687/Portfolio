@@ -4,15 +4,21 @@ class Welcome extends CI_Controller {
   private $data = array('title' => 'Dalton Carvings',
                         'name' => '',
                         'userType' => 'RG');
+
   public function __construct()
   {
     parent::__construct();
     $this->load->model('model_user');
   }
+
   public function index()
   {
     $this->dashboard();
   }
+
+  /**
+   *
+   */
   public function dashboard()
   {
     $this->data['title']= 'Welcome';
@@ -23,11 +29,15 @@ class Welcome extends CI_Controller {
       $this->data['name'] = $this->session->userdata('name');
       $this->data['userType'] = $this->session->userdata('user_type');
     }
-    $this->load->view('view_header',$this->data);
-    $this->load->view('view_nav', $this->data);
-    $this->load->view('dashboard');
-    $this->load->view('view_footer');
+    $this->load->model('Model_item');
+    $this->data['itemList'] = $this->Model_item->getRecentWorks();
+
+    $this->load->view('template/view_header',$this->data);
+    $this->load->view('template/view_nav', $this->data);
+    $this->load->view('base/dashboard', $this->data);
+    $this->load->view('template/view_footer');
   }
+
   public function login()
   {
     $email=$this->input->post('email');
@@ -38,28 +48,31 @@ class Welcome extends CI_Controller {
     if($result)
       $this->dashboard();
     else{
-      $this->load->view('view_header', $this->data);
-      $this->load->view('view_nav', $this->data);
-      $this->load->view('view_login');
-      $this->load->view('view_footer');
+      $this->load->view('template/view_header', $this->data);
+      $this->load->view('template/view_nav', $this->data);
+      $this->load->view('base/view_login');
+      $this->load->view('template/view_footer');
     }
   }
+
   public function thank()
   {
-    $data['title']= 'Thank';
-    $this->load->view('view_header',$this->data);
-    $this->load->view('view_nav', $this->data);
-    $this->load->view('view_thank.php');
-    $this->load->view('view_footer');
+    $data['title']= 'Registration Complete';
+    $this->load->view('template/view_header',$this->data);
+    $this->load->view('template/view_nav', $this->data);
+    $this->load->view('base/view_thank.php');
+    $this->load->view('template/view_footer');
   }
+
   public function register()
   {
     $this->data['title']= 'Registration';
-    $this->load->view('view_header',$this->data);
-    $this->load->view('view_nav', $this->data);
-    $this->load->view("view_registration");
-    $this->load->view('view_footer');
+    $this->load->view('template/view_header',$this->data);
+    $this->load->view('template/view_nav', $this->data);
+    $this->load->view("base/view_registration");
+    $this->load->view('template/view_footer');
   }
+
   public function registration()
   {
     $this->load->library('form_validation');
@@ -78,6 +91,7 @@ class Welcome extends CI_Controller {
       $this->thank();
     }
   }
+
   public function logout()
   {
     $newdata = array(
@@ -90,9 +104,7 @@ class Welcome extends CI_Controller {
     $this->session->sess_destroy();
     $data['title']= 'Home';
     $data['name'] = '';
-    $this->load->view('view_header',$this->data);
-    $this->load->view("view_nav", $this->data);
-    $this->load->view('dashboard');
-    $this->load->view('view_footer');
+
+    $this->dashboard();
   }
 }

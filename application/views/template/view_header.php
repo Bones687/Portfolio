@@ -11,12 +11,12 @@ Strata by HTML5 UP
   <meta name="description" content="" />
   <meta name="keywords" content="" />
   <!--[if lte IE 8]>
-  <script src="../../resource/css/ie/html5shiv.js"></script><![endif]-->
-  <script src="../../resource/js/jquery.min.js"></script>
-  <script src="../../resource/js/jquery.poptrox.min.js"></script>
-  <script src="../../resource/js/skel.min.js"></script>
-  <script src="../../resource/js/init.js"></script>
-  <script src="../../resource/js/animations.js"></script>
+  <script src="../../../resource/css/ie/html5shiv.js"></script><![endif]-->
+  <script src="../../../resource/js/jquery.min.js"></script>
+  <script src="../../../resource/js/jquery.poptrox.min.js"></script>
+  <script src="../../../resource/js/skel.min.js"></script>
+  <script src="../../../resource/js/init.js"></script>
+  <script src="../../../resource/js/animations.js"></script>
   <?php
     echo link_tag('resource/css/skel.css');
     echo link_tag('resource/css/style.css');
@@ -24,5 +24,6 @@ Strata by HTML5 UP
     echo link_tag('resource/css/ie/v8.css');
   ?>
 </head>
+<body id="top">
 
 
