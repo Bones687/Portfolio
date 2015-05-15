@@ -22,6 +22,8 @@ class Welcome extends CI_Controller {
   public function dashboard()
   {
     $this->data['title']= 'Welcome';
+    $this->data['name'] = '';
+
     if(null !== ($this->session->userdata('name')))
     {
       if (!$this->session->userdata('user_status'))
@@ -88,22 +90,23 @@ class Welcome extends CI_Controller {
     else
     {
       $this->model_user->add_user();
-      $this->thank();
+      $this->login();
     }
   }
 
   public function logout()
   {
     $newdata = array(
-      'user_id'   =>'',
-      'user_name'  =>'',
-      'user_email'     => '',
-      'logged_in' => FALSE,
+      'user_id',
+      'user_name',
+      'name',
+      'user_type',
+      'user_status',
+      'logged_in',
     );
-    $this->session->unset_userdata($newdata );
+
+    $this->session->unset_userdata($newdata);
     $this->session->sess_destroy();
-    $data['title']= 'Home';
-    $data['name'] = '';
 
     $this->dashboard();
   }
