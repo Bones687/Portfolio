@@ -17,13 +17,13 @@
     echo('<a class="redirectButton" class="menuItem" href="/welcome/login">Login</a>');
   }
   ?>
-<span style="padding-right: 20px">
-  <span id="cart"><img src="../../../resource/images/icons/cart.png" alt="" /></span>
-  (<span id="quantity">0</span>)
+<span id="cart" style="padding-right: 20px">
+  <span><img src="../../../resource/images/icons/cart.png" alt="" /></span>
+  (<span id="quantity"><?php echo($this->cart->total_items()); ?></span>)
   </span>
   <span id="menuButton" style="alignment: right; padding-right: 30px"><img src="../../../resource/images/icons/menu-icon-white.png" alt="" /></span>
 </div>
-<div id="menu" align="center">
+<div id="menu" class="dropdown" align="center">
   </br>
   <?php if ($userType == 'AD'){
     echo('
@@ -50,6 +50,29 @@
   ?>
 
 
+</div>
+<div id="cartDisplay" class="dropdown">
+  <table id="cartMenu">
+  <?php
+    foreach($this->cart->contents() as $item)
+    {
+      print_r($item);
+      $filePath = '../../resource/uploadedImages/sales/'.$item['options']['item_type'].'/'.$item['options']['image'];
+      echo"<tr><td>";
+      echo'<img src="'.$filePath.'" height="70">';
+      echo '</td><td><tr>'.$item['name'].'</tr>'.$item['price'].'</td>';
+      echo"</td></tr>";
+    }
+  ?>
+  </table>
+  <div>
+    <?php
+      echo form_open('shopping/clearCart');
+      echo form_submit('clearCart', 'Clear Cart');
+      echo form_submit('checkOut', 'Check Out','class="special"');
+      echo form_close();
+    ?>
+  </div>
 </div>
 <header id="header">
   <a href="/welcome/dashboard" class="image avatar"><img src="../../../resource/images/avatar.jpg" alt="" /></a>

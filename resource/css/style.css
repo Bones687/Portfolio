@@ -1056,7 +1056,7 @@
     vertical-align: middle;
 }
 
-#menu {
+.dropdown {
     margin-left: 35%;
     min-width: 20em;
     max-width: calc(100% - 35%);
@@ -1069,6 +1069,7 @@
     position: fixed;
     z-index: 99;
     display: none;
+    color: #ffffff;
 }
 
 #cart {
