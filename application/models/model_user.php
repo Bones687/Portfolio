@@ -5,6 +5,14 @@ class model_user extends CI_Model {
   {
     parent::__construct();
   }
+
+  /**
+   * Function is pretty self explanatory it checks the provided login/password
+   *
+   * @param $email
+   * @param $password
+   * @return bool
+   */
   function login($email,$password)
   {
     $this->db->where("user_email",$email);
@@ -30,6 +38,10 @@ class model_user extends CI_Model {
     }
     return false;
   }
+
+  /**
+   * if everything in the registration form was correct it will insert user into the database.
+   */
   public function add_user()
   {
     $data=array(
