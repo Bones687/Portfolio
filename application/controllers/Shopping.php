@@ -12,9 +12,16 @@ class Shopping extends CI_Controller {
       'message' => '');
   }
 
+  /**
+   * load default controller listItems()
+   */
   public function index(){
-    $this->load->helper('url');
+    $this->listItems();
   }
+
+  /**
+   * list of all items that are currently for sale
+   */
   public function listItems(){
     $this->load->helper('html');
     $this->load->model("Model_shopping");

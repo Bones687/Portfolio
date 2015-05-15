@@ -11,13 +11,16 @@ class Welcome extends CI_Controller {
     $this->load->model('model_user');
   }
 
+  /**
+   * by default load dashboard()
+   */
   public function index()
   {
     $this->dashboard();
   }
 
   /**
-   *
+   * this checks if you are still logged in then loads the home screen with my most recent uploads
    */
   public function dashboard()
   {
@@ -40,6 +43,9 @@ class Welcome extends CI_Controller {
     $this->load->view('template/view_footer');
   }
 
+  /**
+   * verifies password and user emails and then either logs you in or gives you an error
+   */
   public function login()
   {
     $email=$this->input->post('email');
@@ -57,15 +63,9 @@ class Welcome extends CI_Controller {
     }
   }
 
-  public function thank()
-  {
-    $data['title']= 'Registration Complete';
-    $this->load->view('template/view_header',$this->data);
-    $this->load->view('template/view_nav', $this->data);
-    $this->load->view('base/view_thank.php');
-    $this->load->view('template/view_footer');
-  }
-
+  /**
+   * loads the registration form
+   */
   public function register()
   {
     $this->data['title']= 'Registration';
@@ -75,6 +75,9 @@ class Welcome extends CI_Controller {
     $this->load->view('template/view_footer');
   }
 
+  /**
+   * sets rules for registration and runs logic to register or add user to the database
+   */
   public function registration()
   {
     $this->load->library('form_validation');
@@ -94,6 +97,9 @@ class Welcome extends CI_Controller {
     }
   }
 
+  /**
+   * kill session data and load the dashboard
+   */
   public function logout()
   {
     $newdata = array(
