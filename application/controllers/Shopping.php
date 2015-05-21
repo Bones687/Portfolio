@@ -37,7 +37,27 @@ class Shopping extends CI_Controller {
   public function addItem(){
     $item_id = $this->input->post('item_id');
 
-    if(!in_array($item_id, $this->cart->contents()))
+    $addToCart = 'ADD';
+    $rowId = '';
+
+    foreach ($this->cart->contents() as $items){
+
+      if($item_id == $items['id']) {
+
+        if ($items['options']['item_type'] == 'Knife' || $items['options']['item_type'] == 'Custom') {
+          $addToCart = 'IGNORE';
+        }
+        else if ($item_id == $items['id'] && $items['options']['item_type'] == 'Ring' && $items['options']['size'] != $this->input->post('size')) {
+            $addToCart = 'ADD';
+        }
+        else {
+          $addToCart = 'UPDATE';
+          $rowId = $items['rowid'];
+        }
+      }
+    }
+
+    if($addToCart == 'ADD')
     {
       $data = $this->getItemById($item_id);
       $item = array('id' => $data['item_id'],
@@ -47,8 +67,18 @@ class Shopping extends CI_Controller {
                     'options' => array('image' => $data['item_image_filepath'],
                                        'shipping' => $data['item_shipping'],
                                        'item_type' => $data['item_type']));
+      if (NULL !== ($this->input->post('size')))
+        $item['options']['size'] = $this->input->post('size');
 
       $this->cart->insert($item);
+    }
+
+    if($addToCart == 'UPDATE'){
+      $item = $this->cart->get_item($rowId);
+      $data = array('rowid' => $rowId,
+                    'qty' => $item['qty'] + 1);
+
+      $this->cart->update($data);
     }
 
     $this->listItems();
@@ -71,8 +101,33 @@ class Shopping extends CI_Controller {
     return $item[0];
   }
 
-  public function clearCart(){
+  public function cartOptions(){
+    if (NULL !== ($this->input->post('clearCart')))
+      $this->clearCart();
+    else if(NULL !== ($this->input->post('checkOut')))
+      $this->viewCart();
+  }
+
+  private function clearCart(){
     $this->cart->destroy();
     $this->listItems();
+  }
+
+  public function removeItem(){
+    $item = $this->cart->get_item($this->input->post('item_to_remove'));
+    $data = array('rowid' => $item['rowid'],
+                  'qty' => $item['qty'] - 1);
+    $this->cart->update($data);
+    $this->listItems();
+  }
+
+  private function viewCart(){
+    $this->data['title'] = 'Cart';
+    $this->data['cartItems'] = $this->cart->contents();
+
+    $this->load->view("template/view_header", $this->data);
+    $this->load->view("template/view_nav", $this->data);
+    $this->load->view("shopping/view_cart", $this->data);
+    $this->load->view("template/view_footer");
   }
 }

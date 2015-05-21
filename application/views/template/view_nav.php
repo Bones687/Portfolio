@@ -51,29 +51,39 @@
 
 
 </div>
+<?php if ($this->cart->total() > 0) { ?>
 <div id="cartDisplay" class="dropdown">
-  <table id="cartMenu">
   <?php
     foreach($this->cart->contents() as $item)
     {
-      print_r($item);
       $filePath = '../../resource/uploadedImages/sales/'.$item['options']['item_type'].'/'.$item['options']['image'];
-      echo"<tr><td>";
-      echo'<img src="'.$filePath.'" height="70">';
-      echo '</td><td><tr>'.$item['name'].'</tr>'.$item['price'].'</td>';
-      echo"</td></tr>";
+      echo form_open('shopping/removeItem');
+      echo'<div class="cartItem">';
+      echo'<table class="cartTable"><tr class="cartTable"><td class="cartTable" colspan="4"><img src="'.$filePath.'" height="70"></td></tr><tr><td class="cartTable" colspan="4">';
+      echo $item['name'].'</td></tr><tr class="cartTable"><td class="cartTable">Price</td><td class="cartTable">$'.$item['price'].'</td><td class="cartTable" >Qty</td><td class="cartTable" >'.$item['qty'].'</td></tr><tr class="cartTable"><td class="cartTable" colspan="4">';
+      echo form_submit('removeItem', 'Remove Item', 'class="small"');
+      echo '</td></tr></table>';
+      echo form_hidden('item_to_remove', $item['rowid']);
+      echo form_close();
+      echo'</div>';
     }
   ?>
+  <table class="cartTable">
+    <tr>
+      <td class="cartTable">Total</td>
+      <td class="cartTable">$<?php echo $this->cart->total() + 10; ?></td>
+    </tr>
   </table>
   <div>
     <?php
-      echo form_open('shopping/clearCart');
+      echo form_open('shopping/cartOptions');
       echo form_submit('clearCart', 'Clear Cart');
       echo form_submit('checkOut', 'Check Out','class="special"');
       echo form_close();
     ?>
   </div>
 </div>
+<?php } ?>
 <header id="header">
   <a href="/welcome/dashboard" class="image avatar"><img src="../../../resource/images/avatar.jpg" alt="" /></a>
   <h1><strong>Dalton Carvings & Woodwork Co.</strong></h1>

@@ -1063,18 +1063,65 @@
     width: calc(100% - 85%);
     padding: 20px;
     right: 0;
-    margin-top: 35px;
-    height: 100%;
+    margin-top: 50px;
+    max-height: 80%;
     background-color: #1f1d1d;
     position: fixed;
     z-index: 99;
     display: none;
     color: #ffffff;
+    overflow: scroll;
 }
 
 #cart {
     color: #ffffff;
-    font-size: 25px;
+    font-size: 20px;
+}
+
+table.cartTable {
+    table-layout: fixed;
+    color: #ffffff;
+    border: none;
+}
+
+td.cartTable {
+    word-wrap: break-word;
+    background-color: #222222;
+    padding: 0;
+    vertical-align: middle;
+    max-width: 250px;
+}
+
+tr.cartTable {
+    border: none;
+}
+
+table.cartTableDark{
+
+}
+
+table.cartTableLight{
+}
+
+td.cartTableDark {
+    background-color: #d9d9d9;
+    vertical-align: middle;
+}
+
+td.cartTableLight {
+    background-color: #ffffff;
+    vertical-align: middle;
+}
+
+tr.cartTableDark {
+    border: none;
+}
+
+tr.cartTableLight {
+    border: none;
+}
+
+.cartTableItem {
 }
 
 /* Poptrox */
